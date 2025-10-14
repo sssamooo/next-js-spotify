@@ -2,6 +2,7 @@ import { DB } from "@/lib/db-types";
 import SQLite from "better-sqlite3";
 import { Kysely, SqliteDialect } from "kysely";
 import Image from "next/image";
+import Link from 'next/link'
 
 export default async function Home() {
   const dialect = new SqliteDialect({ database: new SQLite("db.sqlite") });
@@ -32,14 +33,17 @@ export default async function Home() {
 
         
 
-        <div className="grid grid-cols-6 gap-12">
+        <div className="grid grid-cols-4 gap-12">
 
           {albums.map((album) => (
-            <div key={album.id} className="bg-blue-500 p-8 rounded-md font-semibold font-mono">
-              {album.name}: {new Date(album.release_date).toDateString()}
+            <div key={album.id} className="bg-white p-8 rounded-md font-mono text-black font-normal">
+              <h1 className="font-bold">{album.name}</h1>
+              <p>{new Date(album.release_date).toDateString()}</p> 
+              <p>ID: {album.id}</p>
+              <Link className="btn btn-primary btn-block bg-green-600" href={`/album/${album.id}`}>Details</Link>
             </div>
             ))}
-
+      
         </div>
 
         
