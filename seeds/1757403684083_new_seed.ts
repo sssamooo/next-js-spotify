@@ -72,13 +72,32 @@ export async function seed(db: Kysely<DB>): Promise<void> {
 			}
 		}
 
-  for (let i = 0; i < 10; i += 1){
+  for (let i = 1; i < 11; i++){
     await db
       .insertInto("playlists")
       .values({
-        name: 'Playlist' + {i}
+        name: 'Playlist' + i
       })
       .execute();
   }
 
+  const playlists = await db.selectFrom("playlists").selectAll().execute();
+  const songs = await db.selectFrom("songs").selectAll().execute();
+
+  for (const playlist of playlists){
+    const nSongs = faker.number.int({ min: 15, max: 50})
+    const randomSongs = faker.helpers.shuffle(songs);
+    const selectSongs = randomSongs.slice(0, nSongs);
+
+    for (const song of selectSongs) {
+      await db
+        .insertInto('playlists_songs')
+        .values({
+          playlist_id: playlist.id,
+          song_id: song.id,
+        })
+        .execute();
+    }
+
+  }
 }
