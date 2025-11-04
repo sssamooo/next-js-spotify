@@ -4,7 +4,11 @@ import Link from "next/link";
 export default async function Home() {
   const db = getDb();
 
-  const playlists = await db.selectFrom("playlists").selectAll().execute();
+  const playlists = await db
+  .selectFrom("playlists")
+  .where("user_id", "=", 1)
+  .selectAll()
+  .execute();
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -16,6 +20,7 @@ export default async function Home() {
             <div key={playlist.id} className="bg-gray-900 p-4 rounded font-mono text-white">
               <Link className="font-semibold text-xl hover:text-green-500" href={`/playlists/${playlist.id}`}>{playlist.name}</Link>
               <p className="text-xs text-gray-500">ID: {playlist.id}</p>
+              <p className="text-xs text-gray-500">User ID: {playlist.user_id}</p>
             </div>
           ))} 
 
