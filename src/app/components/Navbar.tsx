@@ -33,6 +33,8 @@ export default function Navbar() {
       pathname: '/search',
       query: searchLinkquery
     }}>Search</Link>
+
+    <Link className="btn btn-ghost" href="/playlists">Playlists</Link>
   </div>
   </div>
   )

@@ -1,5 +1,7 @@
 import { getDb } from "@/lib/db";
 import Link from 'next/link'
+import RemovePlaylistSongButton from "./RemovePlaylistSongButton";
+import RemovePlaylistButton from "./RemovePlaylistButton";
 
 export default async function PlaylistDetail({
   params,
@@ -9,9 +11,11 @@ export default async function PlaylistDetail({
   const { id } = await params;
   const db = getDb();
 
+  const playlistId = parseInt(id);
+
   const result = await db
   .selectFrom("playlists_songs")
-  .where("playlist_id", "=", Number(id))
+  .where("playlist_id", "=", playlistId)
   .innerJoin("songs", "songs.id", "playlists_songs.song_id")
   .select(["songs.id", "songs.name"])
   .execute();
@@ -19,7 +23,7 @@ export default async function PlaylistDetail({
 
   const playlistName = await db
   .selectFrom("playlists")
-  .where("playlists.id", "=", Number(id))
+  .where("playlists.id", "=", playlistId)
   .selectAll()
   .execute();
 
@@ -38,6 +42,7 @@ export default async function PlaylistDetail({
               <tr>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Actions</th>
               </tr>
             </thead>
 
@@ -46,12 +51,16 @@ export default async function PlaylistDetail({
                 <tr key={result.id}>
                   <td>{i + 1}</td>
                   <td>{result.name}</td>
-                
+                  <td>
+                    <RemovePlaylistSongButton playlistId={playlistId} songId={result.id} />
+                  </td>
                 </tr>
                ))}
             </tbody>   
 
         </table>
+
+        <RemovePlaylistButton playlistId={playlistId} />
 
       </main>
     </div>

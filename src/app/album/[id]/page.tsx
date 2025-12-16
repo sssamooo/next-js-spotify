@@ -1,5 +1,7 @@
 import { getDb } from "@/lib/db";
 import Link from 'next/link'
+import { AddToPlaylistButton } from "./AddSongToPlaylist";
+
 
 export default async function AlbumDetailPage({
   params,
@@ -36,6 +38,8 @@ export default async function AlbumDetailPage({
   .execute();
 
   const author_name = author[0]?.name ?? "Unknown";
+
+  const playlists = await db.selectFrom('playlists').select(["playlists.id", "playlists.name"]).where('user_id', '=', 1).execute();
  
 
   return (
@@ -54,6 +58,7 @@ export default async function AlbumDetailPage({
                 <th>ID</th>
                 <th>Title</th>
                 <th>Duration</th>
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -63,6 +68,9 @@ export default async function AlbumDetailPage({
                   <td>{i + 1}</td>
                   <td>{song.name}</td>
                   <td>{Math.floor(song.duration / 60)}m {song.duration % 60}s</td>
+                  <td>
+									  <AddToPlaylistButton songId={song.id} playlists={playlists} />
+								  </td>
                 </tr>
                ))}
             </tbody>
