@@ -2,6 +2,7 @@ import { getDb } from "@/lib/db";
 import RemovePlaylistSongButton from "./RemovePlaylistSongButton";
 import RemovePlaylistButton from "./RemovePlaylistButton";
 import { UpdatePlaylistButton } from "./UpdatePlaylistButton";
+import { AddLikeButton } from "./AddLikeButton";
 
 export default async function PlaylistDetail({
   params,
@@ -44,6 +45,7 @@ export default async function PlaylistDetail({
               <th>ID</th>
               <th>Title</th>
               <th>Actions</th>
+              <th>Like</th>
             </tr>
           </thead>
 
@@ -54,6 +56,9 @@ export default async function PlaylistDetail({
                 <td>{result.name}</td>
                 <td>
                   <RemovePlaylistSongButton playlistId={playlistId} songId={result.id} />
+                </td>
+                <td>
+                  <AddLikeButton songId={result.id} />
                 </td>
               </tr>
             ))}

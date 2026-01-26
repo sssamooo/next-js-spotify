@@ -8,11 +8,12 @@ export default function RemovePlaylistSongButton(props: {
   songId: number;
 }) {
   return (
-    <button className="btn btn-xs"
-    onClick={() => {console.log("Remove")
-      removeSongFromPlaylist(props.playlistId, props.songId);
-      redirect(`/playlists/${props.playlistId}`);
-    }}>
+    <button className="btn"
+      onClick={() => {
+        console.log("Remove")
+        removeSongFromPlaylist(props.playlistId, props.songId);
+        redirect(`/playlists/${props.playlistId}`);
+      }}>
       Remove
     </button>
   )

@@ -9,7 +9,7 @@ export function UpdatePlaylistButton(props: {
   return (
     <>
       <button
-        className="btn btn-xs"
+        className="btn"
         onClick={() =>
           (
             document.getElementById(
@@ -31,7 +31,7 @@ export function UpdatePlaylistButton(props: {
               defaultValue={props.playlistName}
             />
             <input
-              className="btn btn-xs"
+              className="btn"
               type="submit"
               value="Update"
             />

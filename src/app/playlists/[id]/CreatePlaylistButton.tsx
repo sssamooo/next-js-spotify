@@ -6,7 +6,7 @@ export function CreatePlaylistButton() {
   return (
     <>
       <button
-        className="btn btn-xs"
+        className="btn"
         onClick={() =>
           (
             document.getElementById(
