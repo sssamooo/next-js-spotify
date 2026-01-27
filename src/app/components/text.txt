@@ -1,0 +1,18 @@
+
+  useEffect(() => {
+    if (queue.length === 0) {
+      setCurrentIndex(0);
+      setIsPlaying(false);
+      return;
+    }
+
+    if (currentIndex >= queue.length) setCurrentIndex(queue.length - 1);
+  }, [queue.length, currentIndex]);
+
+  <button
+            className="btn btn-xs btn-primary"
+            onClick={() => setIsPlaying((p) => !p)}
+            disabled={queue.length === 0}
+          >
+            {isPlaying ? "Pause" : "Play"}
+          </button>
